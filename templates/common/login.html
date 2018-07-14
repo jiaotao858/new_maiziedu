@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'common:login' %}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+   {% csrf_token %}
+   <input type="text" name="username" id="username" placeholder="请输入用户名" >
+   <input type="password" name="password" id="password" placeholder="登陆密码" value="" >
+   <input type="hidden" name="source_url" value="{{ request.META.HTTP_REFERER }}">
+   <input type="submit" value="立即登录">
+ </form>
+</body>
+</html>

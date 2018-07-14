@@ -1,0 +1,353 @@
+{% extends "common/base.html" %}
+{% load staticfiles %}
+{#{% load common_tags %}#}
+
+{% block title %}首页标题{% endblock %}
+{% block keywords%}首页关键词{% endblock %}
+{% block description%}首页描述{% endblock %}
+
+{% block header %}
+<header class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset-top="64">
+{% endblock %}
+
+<!--正文部分-->
+{% block container %}
+<div class="v5-banner-big">
+    <div class="container">
+
+        <!--广告部分-->
+        <div class="carousel-container">
+            <div id="carousel">
+                {% for ad in ad_list %}
+                    <div class="carousel-feature">
+                        <a href="#"><img class="carousel-image" alt="Image Caption" src="{{ ad.image_url.url }}"></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+<!--课程部分-->
+<div class="v5-index-main">
+    <div class="v5-titline"></div>
+    <div class="container">
+      <div class="v5-recommend">
+        <div class="v5-tabs-box" id="v5-tabs">
+          <ul class="v5-tabs" id="v5-tabs" role="tablist">
+            <li class="active"><a href="#new" class="is-active" role="tab" data-toggle="tab">最新课程</a></li>
+            <li><a href="#most" role="tab" data-toggle="tab">最多播放</a></li>
+            <li><a href="#hot" role="tab" data-toggle="tab">最具人气</a></li>
+          </ul>
+
+            <!--按条件排序 /最新/最热/最受欢迎-->
+          <div class="tabs-container tab-content">
+
+              <!--最新课程-->
+            <div class="v5-course-item tab-pane fade in active" id="new" data-holder="holdernew">
+              <div class="page-item">
+                <ul class="row course-list-index">
+                    {% for new in new_course_list%}
+                      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <a href="{% url 'common:course_player' new.id %}">
+                          <dl>
+                            <dt>
+                              <div><img src="{{ new.image.url }}"></div>
+                            </dt>
+                            <dd>
+                              <span>{{ new.name }}</span>
+                              <p>{{ new.student_count }}人正在学习</p>
+                            </dd>
+                          </dl>
+                        </a>
+                      </li>
+                    {% endfor %}
+                </ul>
+              </div>
+
+              <!--翻页-->
+              <div class="page-bg-w">
+                <div class="row v5-pages">
+                  <div class="col-sm-12 v5-pages-list">
+                    <ul class="row fr">
+                      <li><a href="" class="v5-icon v5-icon-prev"></a></li>
+                      <li><a href="" class="page-num active">1</a></li>
+                      <li><a href="" class="page-num">2</a></li>
+                      <li><a href="" class="page-num">3</a></li>
+                      <li><a href="" class="v5-icon v5-icon-next"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           <!--最多播放课程-->
+            <div class="v5-course-item tab-pane fade" id="most" data-holder="holdermost">
+            	<div class="page-item">
+                     {% for most in play_count_list %}
+                <ul class="row course-list-index">
+                  <li class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                      <a href="{% url 'common:course_player' most.id %}">
+                      <dl>
+                        <dt>
+                          <div><img src="{{ most.image.url }}"></div>
+                        </dt>
+                        <dd>
+                          <span>{{ most.name }}</span>
+                          <p>{{ most.student_count }}正在学习</p>
+                        </dd>
+                      </dl>
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+            <!--翻页模块-->
+              <div class="page-bg-w">
+                <div class="row v5-pages">
+                  <div class="col-sm-12 v5-pages-list">
+                    <ul class="row fr">
+                      <li><a href="" class="v5-icon v5-icon-prev"></a></li>
+                      <li><a href="" class="page-num active">1</a></li>
+                      <li><a href="" class="page-num">2</a></li>
+                      <li><a href="" class="page-num">3</a></li>
+                      <li><a href="" class="page-num">4</a></li>
+                      <li><a href="" class="page-num">5</a></li>
+                      <li><a href="" class="v5-icon v5-icon-next"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <!--最具人气-->
+            <div class="v5-course-item tab-pane fade" id="hot" data-holder="holderhot">
+              <div class="page-item">
+                   {% for host in favorite_count_list %}
+                <ul class="row course-list-index">
+                  <li class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                     <a href="{% url 'common:course_player' host.id %}">
+                      <dl>
+                        <dt>
+                          <div><img src="{{ host.image.url }}"></div>
+                        </dt>
+                        <dd>
+                          <span>{{ host.name }}</span>
+                          <p>{{ host.student_count }}人正在学习</p>
+                        </dd>
+                      </dl>
+                    </a>
+                  </li>
+                    {% endfor %}
+                </ul>
+              </div>
+
+              <div class="page-bg-w">
+                <div class="row v5-pages">
+                  <div class="col-sm-12 v5-pages-list">
+                    <ul class="row fr">
+                      <li><a href="" class="v5-icon v5-icon-prev"></a></li>
+                      <li><a href="" class="page-num active">1</a></li>
+                      <li><a href="" class="page-num">2</a></li>
+                      <li><a href="" class="page-num">3</a></li>
+                      <li><a href="" class="page-num">4</a></li>
+                      <li><a href="" class="page-num">5</a></li>
+                      <li><a href="" class="v5-icon v5-icon-next"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--名师风采模块-->
+    <div class="v5-titline">
+      <div class="container">
+        <h1>名师风采</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="tc-list">
+        <a id="prev" class="prev" href="#"></a>
+        <div class="tc-list-w">
+          <ul id="foo" class="cf">
+
+              {% for teacher in teacher_list %}
+            <li>
+              <dl>
+                <dt><a href="{% url 'common:teacher' teacher.id %}" style="border-left-color:#78BD8B;"><img src="{% static 'test/2.png' %}"></a></dt>
+                <dd>
+                  <h2>{{ teacher.username }}</h2>
+                  <h3>{{ teacher.description }}</h3>
+                </dd>
+              </dl>
+            </li>
+               {% endfor %}
+
+          </ul>
+        </div>
+        <a id="next" class="next" href="#"></a>
+      </div>
+    </div>
+
+    <!--推荐阅读部分-->
+    <div class="v5-titline">
+      <div class="container">
+        <h1>推荐阅读</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="v5-read cf">
+
+        <div class="v5-read-item">
+          <div class="v5-read-list" style="background-color:#00A388;">
+            <h1>官方活动</h1>
+            <ul>
+                {% for article in article_av %}
+                    <li><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+          <p><img src="{% static 'test/3.jpg' %}"></p>
+        </div>
+
+        <div class="v5-read-item v5-read-item-mid">
+          <p><img src="{% static 'test/4.jpg' %}"></p>
+          <div class="v5-read-list" style="background-color:#FF6138;">
+            <h1>开发者资讯</h1>
+            <ul>
+                {% for article in article_nw %}
+                    <li><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="v5-read-item">
+          <div class="v5-read-list" style="background-color:#00A388;">
+            <h1>技术交流</h1>
+            <ul>
+                {% for article in article_dc %}
+                    <li><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+          <p><img src="{% static 'test/5.jpg' %}"></p>
+        </div>
+      </div>
+    </div>
+
+    <!--战略合作伙伴-->
+    <div class="v5-titline">
+      <div class="container">
+        <h1>战略合作</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="v5-strategic">
+        <ul class="cf">
+          <li>
+            <a href=""><img src="{% static 'test/6.png' %}"></a>
+          </li>
+          <li>
+            <a href=""><img src="{% static 'test/7.png' %}"></a>
+          </li>
+          <li>
+            <a href=""><img src="{% static 'test/9.png' %}"></a>
+          </li>
+          <li>
+            <a href=""><img src="{% static 'test/10.png' %}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+<!--尾部导航-->
+{% block footer%}
+<div class="v5-footer">
+    <div class="container">
+      <div class="v5-footer-container">
+        <div class="v5-footer-links cf">
+          <dl class="f-link">
+            <dt>友情链接</dt>
+            <dd>
+              <ul>
+                <li class="cf">
+                  <a href="">网易云课堂</a><span>|</span>
+                  <a href="">腾讯课堂</a><span>|</span>
+                  <a href="">微信营销</a><span>|</span>
+                  <a href="">文档转换网</a><span>|</span>
+                  <a href="">浪曦IT视频</a><span>|</span>
+                  <a href="">自主学习网</a><span>|</span>
+                  <a href="">网易云课堂</a><span>|</span>
+                  <a href="">腾讯课堂</a><span>|</span>
+                  <a href="">微信营销</a><span>|</span>
+                  <a href="">浪曦IT视频</a><span>|</span>
+                  <a href="">自主学习网</a><span>|</span>
+                  <a href="">网易云课堂</a><span>|</span>
+                  <a href="">腾讯课堂</a><span>|</span>
+                  <a href="">微信营销</a><span>|</span>
+                </li>
+                <li class="cf">
+                  <a href="">网易云课堂</a><span>|</span>
+                  <a href="">腾讯课堂</a><span>|</span>
+                  <a href="">微信营销</a><span>|</span>
+                  <a href="">文档转换网</a><span>|</span>
+                  <a href="">浪曦IT视频</a><span>|</span>
+                  <a href="">自主学习网</a><span>|</span>
+                  <a href="">网易云课堂</a><span>|</span>
+                  <a href="">腾讯课堂</a><span>|</span>
+                  <a href="">微信营销</a><span>|</span>
+                  <a href="">浪曦IT视频</a><span>|</span>
+                  <a href="">自主学习网</a><span>|</span>
+                  <a href="">网易云课堂</a><span>|</span>
+                  <a href="">腾讯课堂</a><span>|</span>
+                  <a href="">微信营销</a><span>|</span>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+            <!--关注我们-->
+          <dl class="follow">
+            <dt>关注我们</dt>
+            <dd>
+              <ul>
+                <li><a href=""><span class="sina"></span>新浪微博</a></li>
+                <li><a href=""><span class="weixin"></span>官方微信</a></li>
+                <li><a href=""><span class="qq"></span>腾讯微博</a></li>
+              </ul>
+            </dd>
+          </dl>
+
+            <!--网站导航-->
+          <dl class="webmap">
+            <dt>网站导航</dt>
+            <dd>
+              <ul>
+                <li><a href="">网站首页</a></li>
+                <li><a href="">关于我们</a></li>
+                <li><a href="">联系我们</a></li>
+                <li><a href="">意见反馈</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="v5-footer-bottom">
+          <p>© 2012-2014 maiziedu.com | 服务条款 | 蜀ICP备13014270号-4 Version 4.0.1 release20140721.1</p>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

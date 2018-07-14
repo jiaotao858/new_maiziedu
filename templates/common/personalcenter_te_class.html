@@ -1,0 +1,232 @@
+{% extends 'common/base.html' %}
+ {% load static %}
+
+{% block title %}个人中心-老师-我的班级{% endblock %}
+{% block keywords%}首页关键词{% endblock %}
+{% block description%}首页描述{% endblock %}
+
+{% block container %}
+  <div class="container-fluid container-banner">
+    <div class="container container-uinfo">
+      <div class="header-uinfo">
+        <div class="uinfo-head"><img src="test/15.jpg"></div>
+        <div class="uinfo-con">
+          <div class="user-name"><span>歪脖钳短攻城</span></div>
+        </div>
+      </div>
+      <div class="uc-nav">
+        <ul>
+          <li class="active"><a href="{% url 'common:home_teacher_class' request.user.id %}">我的班级</a></li>
+          <li><a href="{% url 'common:home_teacher_message' request.user.id %}">我的消息</a><span class="msg-tips">1</span></li>
+          <li><a href="{% url 'common:home_teacher_info' request.user.id %}">个人资料</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container uc-boxb">
+    <div class="uc-h1"><a href="#" class="v5-icon v5-icon-add fr" data-toggle="modal" data-target="#createClass"></a>正在进行的班级</div>
+    <ul class="row uc-class">
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <section style="background-color:#A9BE32;">
+          <a href="">
+          	<img src="images/course/android.png">
+            <article>
+              <h3>Android应用开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#E68E38;">
+          <a href="">
+          	<img src="images/course/ios.png">
+            <article>
+              <h3>iOS开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#429FDA;">
+          <a href="">
+          	<img src="images/course/drupal.png">
+            <article>
+              <h3>Drupal网站开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#D3A21F;">
+          <a href="">
+          	<img src="images/course/cocos.png">
+            <article>
+              <h3>Cocos2D-X手机游戏 开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#EE5C5C;">
+          <a href="">
+          	<img src="images/course/windows8.png">
+            <article>
+              <h3>WindowsPhone应用 开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+    </ul>
+    <div class="uc-h1">已毕业的班级</div>
+    <ul class="row uc-class">
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <section style="background-color:#A9BE32;">
+          <a href="">
+          	<img src="images/course/android.png">
+            <article>
+              <h3>Android应用开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+              <p>毕业日期:2014-9-10</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#E68E38;">
+          <a href="">
+          	<img src="images/course/ios.png">
+            <article>
+              <h3>iOS开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+              <p>毕业日期:2014-9-10</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#429FDA;">
+          <a href="">
+          	<img src="images/course/drupal.png">
+            <article>
+              <h3>Drupal网站开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+              <p>毕业日期:2014-9-10</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#D3A21F;">
+          <a href="">
+          	<img src="images/course/cocos.png">
+            <article>
+              <h3>Cocos2D-X手机游戏 开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+              <p>毕业日期:2014-9-10</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      	<section style="background-color:#EE5C5C;">
+          <a href="">
+          	<img src="images/course/windows8.png">
+            <article>
+              <h3>WindowsPhone应用 开发工程师</h3>
+              <p>班级编号：010101</p>
+              <p>班级学员数：26</p>
+              <p>毕业日期:2014-9-10</p>
+            </article>
+          </a>
+          <a href="" class="opt">管理班级</a>
+        </section>
+      </li>
+    </ul>
+  </div>
+
+<!--创建班级-->
+<div class="modal fade" id="createClass" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="forgetpswModalLabel">创建班级</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal form-createclass" role="form">
+          <div class="form-group form-group-nomb">
+            <label for="" class="col-sm-3 control-label v5-gutter">选择课程</label>
+            <div class="col-sm-9 v5-gutter">
+              <select class="form-control">
+                <option>选择课程</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label v5-gutter">班级编号</label>
+            <div class="col-sm-9 v5-control-label v5-gutter">AND20140901班</div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label v5-gutter">开课时间</label>
+            <div class="col-sm-5 v5-gutter">
+              <select class="form-control">
+                <option>2014</option>
+              </select>
+            </div>
+            <div class="col-sm-1 v5-control-label v5-gutter">年</div>
+            <div class="col-sm-offset-3 col-sm-3 v5-gutter v5-mt10">
+              <select class="form-control">
+                <option>01</option>
+              </select>
+            </div>
+            <div class="col-sm-1 v5-control-label v5-gutter v5-mt10">月</div>
+            <div class="col-sm-3 v5-gutter v5-mt10">
+              <select class="form-control">
+                <option>31</option>
+              </select>
+            </div>
+            <div class="col-sm-1 v5-control-label v5-gutter v5-mt10">日</div>
+          </div>
+          <div class="form-group form-group-last">
+            <div class="col-sm-12">
+              <button type="submit" class="btn btn-micv5 btn-block">创建</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/microoh-v5.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
+
+{% endblock %}

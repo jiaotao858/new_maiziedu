@@ -1,0 +1,393 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% load common_tags %}
+
+<meta name="description" content="">
+<meta name="author" content="">
+<title>课程播放</title>
+
+
+{% block container %}
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="#">首页</a></li>
+      <li><a href="#">{{ course.name }}</a></li>
+      <li class="active">{{ curr_lesson.name }}</li>
+    </ol>
+  </div>
+  <div class="container">
+    <div class="course-play">
+      <dl class="course-lead">
+        <dt>{{ course.name }}</dt>
+        <dd>{{ course.description }}</dd>
+      </dl>
+
+    <!--课程播放-->
+      <div class="course-play-container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 course-play-box">
+              <video width="100%" height="100%" controls="controls" autoplay="autoplay">
+                  <source src="{{ curr_lesson.video_url }}" type="video/mp4">
+                  <source src="{{ curr_lesson.video_url }}" type="video/ogg">
+                  <source src="{{ curr_lesson.video_url }}" type="video/webm">
+                   您的浏览器暂不支持视频播放，请换其他浏览器观看。
+            </video>
+{#            <img src="test/11.jpg">#}
+          </div>
+
+          <!--选择课程章节-->
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 course-play-list">
+            <h1>课程章节</h1>
+            <div class="playlist scroll-pane">
+
+              <ul>
+                  {% for lesson in lesson_list %}
+                      <li><a href="{% url 'common:course_player' course.id lesson.id %}">{{ lesson.name }}</a></li>
+                  {% endfor %}
+              </ul>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="row mc-interact">
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            <div class="mc-interact-save">
+              <a href="" class="house">
+                <i class="v5-icon v5-icon-save"></i>
+                <span>收藏</span>
+              </a>
+              <a href="" class="downloadv">
+                <i class="v5-icon v5-icon-download"></i>
+                <span>下载</span>
+              </a>
+            </div>
+            <div class="mc-interact-share">
+              <dl>
+                <dt class="cf">
+                  <a href="" class="v5-icon v5-icon-sina"></a>
+                  <a href="" class="v5-icon v5-icon-qqzone"></a>
+                  <a href="" class="v5-icon v5-icon-sina"></a>
+                </dt>
+                <dd>分享给朋友</dd>
+              </dl>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+            <p>已有3326位同学与你并肩作战</p>
+          </div>
+        </div>
+        <div class="row course-play-info">
+          <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 aside-l">
+          	<ul class="course-play-tabs" role="tablist">
+              <li class="active"><a href="#comm" role="tab" data-toggle="tab">学习交流</a></li>
+{#              <li><a href="#exercise" role="tab" data-toggle="tab">在线练习</a></li>#}
+              <li><a href="#submit" role="tab" data-toggle="tab">作业提交</a></li>
+              <li><a href="#download" role="tab" data-toggle="tab">课件下载</a></li>
+            </ul>
+
+
+          <!--评论模块-->
+            <div class="tab-content">
+              <div class="tab-pane active" id="comm">
+                <div class="media">
+                  <a class="pull-left" href="#">
+                    <img class="media-object" src="{% static 'test/12.jpg' %}">
+                  </a>
+
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                  <!--未登录显示游客-->
+                    {% if not user.is_authenticated %}
+                        <span class="user-name">游客</span>
+                    </h4>
+                  <!--未登录禁用输入框 disabled-->
+                    <div class="comment-input">
+                      <textarea class="form-control" rows="3" placeholder="我要评论" disabled></textarea>
+                       <div class="not-logged">
+                        <p>请先<a  href="{% url 'common:login' %}" >登录</a>或<a  href="{% url 'common:register' %}"  >注册</a></p>
+                       </div>
+                     <div class="btnbox">
+                            <button type="button" class="btn btn-micv5 btn-lg-fts btn-micv5-disabled" disabled>发布评论</button>
+                     </div>
+                    </div>
+
+                     <!--登陆后显示相关,无父评论时提交方式-->
+                     {% else %}
+                    <form action="{% url 'common:discuss_post' %}" method="post">
+                    {% csrf_token %}
+                    <h4 class="media-heading">
+                        <span class="user-name">{{ request.user.username }}</span>
+                    </h4>
+                    <div class="comment-input">
+                        <input class="lesson_id" name="lesson_id" type="hidden" value="{{ curr_lesson_id }}">
+                        <input class="user_id" name="user_id" type="hidden" value="{{ request.user.id }}">
+                        <textarea class="form-control" name="content" rows="3" placeholder="我要评论"></textarea>
+                    </div>
+                     <div class="btnbox">
+                            <button type="submit" class="btn btn-micv5 btn-lg-fts" >发布评论</button>
+                      </div>
+                    </form>
+
+                    {% endif %}
+                </div>
+               </div>
+
+            <!--父评论和子评论-->
+{#                {% for discuss in discuss_list%}#}
+{#                <ul class="media-list">#}
+{#                  <li class="media">#}
+{#                    <a class="pull-left" href="#">#}
+{#                      <img class="media-object" src="{% static 'test/12.jpg' %}">#}
+{#                    </a>#}
+{#                    <div class="media-body">#}
+{#                      <h4 class="media-heading">#}
+{#                        <a href="" class="reply">回复{{ discuss.discuss_num }}</a>#}
+{#                        <span class="user-name">{{ discuss.user.username }}</span>#}
+{#                        <span class="time">{{ discuss.date_publish }}</span>#}
+{#                      </h4>#}
+{#                      <p>{{ discuss.content }}</p>#}
+{##}
+{#                        {% for sub_discuss in discuss.children_discuss %}#}
+{#                        <div class="media">#}
+{#                        <a class="pull-left" href="#">#}
+{#                          <img class="media-object" src="/static/test/default_big.jpg">#}
+{#                        </a>#}
+{#                        <div class="media-body">#}
+{#                          <h4 class="media-heading">#}
+{#                          	<a href="" class="reply">回复{{ sub_discuss.discuss_num }}</a>#}
+{#                            <span class="user-name">{{ sub_discuss.user.username }}</span>#}
+{#                              <span class="time">{{ discuss.date_publish  }}</span>#}
+{#                          </h4>#}
+{#                            <p>{{ sub_discuss.content }}</p>#}
+{#                        </div>#}
+{#                        </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                  </li>#}
+{#                </ul>#}
+{#               {% endfor %}#}
+
+                {% for discuss in discuss_list %}
+                <ul class="media-list">
+                  <li class="media">
+                    <a class="pull-left" href="#">
+                      <img class="media-object" src="{% static 'test/12.jpg' %}">
+                    </a>
+                      <!--显示父评论-->
+                    <div class="media-body">
+                      <h4 class="media-heading">
+                        <a href="" class="reply">回复{{ discuss.discuss_num }}</a>
+                        <span class="user-name">{{ discuss.user }}</span>
+                        <span class="time">{{ discuss.date_publish }}</span>
+                      </h4>
+                      <p>{{ discuss.content }}！</p>
+
+                        <!--显示子评论-->
+                        {% for sub_discuss in discuss.children_discuss %}
+                      <div class="media">
+                        <a class="pull-left" href="#">
+                          <img class="media-object" src="{% static 'test/12.jpg' %}">
+                        </a>
+                        <div class="media-body">
+                          <h4 class="media-heading">
+                            <a href="" class="reply">回复{{ sub_discuss.discuss_num }}</a>
+                            <span class="user-name">{{ sub_discuss.user }}</span>
+                            <span class="grade">老师</span>
+                            <span class="time">{{ sub_discuss.date_publish}}</span>
+                          </h4>
+                          <p>{{ sub_discuss.content }}</p>
+                        </div>
+                      </div>
+                        {% endfor %}
+
+                    </div>
+                  </li>
+                </ul>
+
+                {% empty %}
+                        暂时未有相关资料！
+
+              {% endfor %}
+              </div>
+
+              <!--div class="tab-pane" id="exercise">
+              	<div class="row exercise-table">
+                  <div class="col-sm-4">
+                   <div class="knowledge-point">
+                     <h1>知识点</h1>
+                     <p>echo是PHP中的输出语句，可以把字符串输出（字符串用双引号括起来）。</p>
+                     <p>如下代码：</p>
+                     <p>&lt;?php echo "Hello world!";?&gt;注意echo关键字与字符串之间至少要有一个空格。如下面写法是不正确的：</p>
+                     <p>&lt;?php echo"Hello world!";?&gt;</p>
+                   </div> 
+                   <div class="task">
+                     <h1>任务</h1>
+                     <p>echo是PHP中的输出语句，可以把字符串输出（字符串用双引号括起来）。</p>
+                     <p>如下代码：</p>
+                     <p>&lt;?php echo "Hello world!";?&gt;注意echo关键字与字符串之间至少要有一个空格。如下面写法是不正确的：</p>
+                     <p>&lt;?php echo"Hello world!";?&gt;</p>
+                   </div>
+                  </div>
+                  <div class="col-sm-8 v5-code">
+                    <div class="code-wp">
+                      <div class="code-box scroll-pane">
+                        <pre>
+<code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;
+&lt;title&gt;Echo语句&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt; 
+&lt;p&gt;
+ 
+&lt;/p&gt;
+</code>
+                        </pre>                     
+                      </div>
+                      <div class="runcode"><button class="btn btn-micv5 btn-lg-fts">提交</button></div>
+                    </div>
+                    <div class="run-results">
+                      <h1>运行结果</h1>
+                      <div class="results scroll-pane">
+                        <pre>
+<code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;
+&lt;title&gt;Echo语句&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt; 
+</code>
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div-->
+
+
+              <div class="tab-pane" id="submit">
+                <h1>需求描述</h1>
+                <p>1、对功能的规定</p>
+                <p>用列表的方式（例如IPO表即输入、处理、输出表的形式），逐项定量和定性地叙述对软件所提出的功能要求，说明输入什么量、经怎样的处理、得到什么输出，说明软件应支持的终端数和应支持的并行操作的用户数。</p>
+                <p>2、对性能的规定</p>
+                <p>(1)精度</p>
+                <p>说明对该软件的输入、输出数据精度的要求，可能包括传输过程中的精度。</p>
+                <p>(2)时间特性要求</p>
+                <p>说明对于该软件的时间特性要求，如对：</p>
+                <p>① 响应时间。</p>
+                <p>② 更新处理时间。</p>
+                <p>③ 数据的转换和传送时间。</p>
+                <p>④ 解题时间。</p>
+                <p>等的要求。</p>
+                <p>(3)灵活性</p>
+                <p>说明对该软件的灵活性的要求，即当需求发生某些变化时，该软件对这些变化的适应能力，如：</p>
+                <p>① 操作方式上的变化。</p>
+                <p>② 运行环境的变化。</p>
+                <p>③ 同其他软件的接口的变化。</p>
+                <!--开始上传-->
+                <div class="btn-box">
+                  <button type="button" class="btn btn-micv5 btn-v5-lg">开始上传</button>
+                </div>
+                <div class="success-tips"><span>上传此章作业（ZIP、RAR）</span></div>
+
+                <!--上传出错-->
+                <div class="btn-box">
+                  <button type="button" class="btn btn-micv5 btn-v5-lg">重新上传</button>
+                </div>
+                <div class="tips-error bg-danger text-danger">错误提示</div>
+                
+                <!--上传成功-->
+                <div class="success-tips"><i class="v5-icon v5-icon-success"></i><span>此章节的作业已上传成功，继续努力！</span></div>
+              </div>
+
+                <!--课件下载相关资料-->
+              <div class="tab-pane" id="download">
+
+              	<table class="table">
+                  <tbody>
+                   {% for resources in resource_list %}
+                    <tr>
+                      <td width="9%"><img src="{% static 'images/doc/zip.png'%}"></td>
+                      <td width="36%">{{ resources.name }}</td>
+                      <td width="55%" class="text-align-r"><a href="{{ resources.download_url.url }}" class="btn btn-micv5"><i class="v5-icon v5-icon-downloadsm"></i>下载</a></td>
+                    </tr>
+                    {% empty %}
+                    暂时未有相关资料！
+                   {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 aside-r">
+            <div class="v5-box">
+              <h1>讲师介绍</h1>
+              <div class="media teacher">
+                <a class="pull-left" href="#">
+                  <img src="{% static 'test/2.jpg' %}">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading">{{ teacher.username }}</h4>
+                   <p>{{ teacher.position}}</p>
+                  <a href="" class="btn btn-micv5">查看他的课程</a>
+                </div>
+              </div>
+              <article>
+              	{{ teacher.description }}
+              </article>
+            </div>
+
+            <div class="v5-box">
+              <h1>相关文章</h1>
+              <div class="media relevant">
+                <a class="pull-left" href="#">
+                  <img src="{% static 'test/13.jpg' %}">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading"><a href="">开发者的对象技术开发者的</a></h4>
+                  <p>21小时前发布 副本</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="v5-footer">
+    <div class="container">
+      <div class="v5-footer-container">
+        <div class="v5-footer-bottom">
+          <p>© 2012-2014 maiziedu.com | 服务条款 | 蜀ICP备13014270号-4 Version 4.0.1 release20140721.1</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--二维码-->
+<div class="ewm">
+  <p>APP可离线下载该课程</p>
+  <img src="{% static 'test/14.png' %}">
+  <p>扫描二维码下载APP</p>
+</div>
+
+
+
+
+
+<script>
+$(function(){
+	$('.scroll-pane').jScrollPane({
+			autoReinitialise: true
+		});
+});
+</script>
+
+{% endblock container %}

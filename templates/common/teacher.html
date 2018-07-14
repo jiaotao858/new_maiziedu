@@ -1,0 +1,45 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}他的课程-教师{% endblock %}
+{% block keywords%}首页关键词{% endblock %}
+{% block description%}首页描述{% endblock %}
+
+{% block container %}
+
+  <div class="container-fluid container-banner container-banner-a">
+    <div class="container container-uinfo">
+      <div class="header-uinfo">
+        <div class="uinfo-head"><img src="{% static 'test/15.jpg' %}"></div>
+        <div class="uinfo-con">
+          <p>{{ teacher.username }}</p>
+          <p>{{ teacher.position }}</p>
+          <p>简介：{{ teacher.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container uc-boxb">
+    <div class="uc-h1">他的课程</div>
+    <ul class="row my-course">
+
+        {% for course in courses %}
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <section style="background-color:{{ course.course_color }};">
+          <a href="{% url 'common:course_player' course.id %}">
+          	<img src="{% static 'images/course/android.png' %}">
+            <article>
+              <h3>{{ course.name }}</h3>
+              <p>班级排名：5/24</p>
+            </article>
+          </a>
+          <a href="{% url 'common:course_player' course.id %}" class="opt">查看</a>
+        </section>
+      </li>
+        {% endfor %}
+
+    </ul>
+  </div>
+
+{% endblock container%}

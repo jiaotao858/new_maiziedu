@@ -1,0 +1,46 @@
+{% extends 'common/base.html' %}
+
+{% block container %}
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="#">首页</a></li>
+      <li class="active">麦子课程</li>
+    </ol>
+  </div>
+  <div class="container container-course-list">
+    <ul class="row course-list">
+
+        {% for course in courses %}
+      <li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <section style="background-color:{{ course.course_color }};">
+          <a href="{% url 'common:course_stage' course.id %}">
+          	<img src="{{ course.image.url }}">
+            <article>
+              <h3>{{ course.name }}</h3>
+              <p>{{ course.student_count }}位学员正在学习</p>
+            </article>
+          </a>
+        </section>
+      </li>
+        {% endfor %}
+
+    </ul>
+    <div class="page-bg-g">
+      <div class="row v5-pages">
+        <div class="col-sm-12 v5-pages-list">
+          <ul class="row fr">
+            <li><a href="" class="v5-icon v5-icon-prev"></a></li>
+            <li><a href="" class="page-num active">1</a></li>
+            <li><a href="" class="page-num">2</a></li>
+            <li><a href="" class="page-num">3</a></li>
+            <li><a href="" class="page-num">4</a></li>
+            <li><a href="" class="page-num">5</a></li>
+            <li><a href="" class="v5-icon v5-icon-next"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
