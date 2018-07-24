@@ -7,10 +7,16 @@
 <body>
 <form action="{% url 'common:login' %}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
    {% csrf_token %}
-   <input type="text" name="username" id="username" placeholder="请输入用户名" >
-   <input type="password" name="password" id="password" placeholder="登陆密码" value="" >
+    <fieldset>
+    <legend>麦子登陆页</legend>
+    用户名：<br>
+   <input type="text" name="username" id="username" placeholder="请输入用户名" ><br>
+    密码：<br>
+   <input type="password" name="password" id="password" placeholder="登陆密码" value="" ><br>
    <input type="hidden" name="source_url" value="{{ request.META.HTTP_REFERER }}">
-   <input type="submit" value="立即登录">
+   <br>
+   <input type="submit" value="立即登录"><br>
+    </fieldset>
  </form>
 </body>
 </html>
