@@ -49,9 +49,9 @@ def get_context_data(request, **kwargs):
     if request.user.is_authenticated():
         current_user_set = request.user
         print(current_user_set)
-        current_group_set = Group.objects.get(user=current_user_set)
-        print(current_group_set)
-        print(type(current_group_set))
+        # current_group_set = Group.objects.get(user=current_user_set)
+        # print(current_group_set)
+        # print(type(current_group_set))
     return locals()
 
 
